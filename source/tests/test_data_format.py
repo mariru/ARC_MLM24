@@ -21,6 +21,11 @@ def validate_grid(grid):
     assert row_len <= 30
     assert all(len(row) == row_len for row in grid)
 
+
+def validate_point_cloud(point_cloud):
+    # need to finish
+    pass
+
 def validate_submission_format(submission, test_challenges):
     """
     Make sure that submission is a dictionary with the same keys as test_challenges. 
