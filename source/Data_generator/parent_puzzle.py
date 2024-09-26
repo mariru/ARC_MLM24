@@ -18,18 +18,18 @@ class puzzle():
         self.rule = "Input a sparse matrix, change the pixel colors based on a colormap."
         self.examples = []
 
-    def input_init(self, size):
+    def construct_inputs(self, size):
         x = (np.random.rand(*size) < 0.1)* np.random.randint(1,10,size)
         return x
 
     def sample(self, matrix_sizes):
         for mat_size in matrix_sizes:
-            input = self.input_init(mat_size)
-            output = self.solve(input)
+            input = self.construct_inputs(mat_size)
+            output = self.construct_solutions(input)
             self.examples.append((input, output))
         return self.examples
             
-    def solve(self, input):
+    def construct_solutions(self, input):
         return input
     def visualize(self, idx):
         try:

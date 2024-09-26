@@ -18,10 +18,11 @@ class color_change_puzzle(puzzle):
         np.random.seed(None)
         print(self.color_map)
 
-    def input_init(self, size):
+    def construct_input(self, size):
         x = (np.random.rand(*size) < 0.1)* np.random.randint(1,10,size)
         return x
-    def solve(self, input):
+    
+    def construct_solutions(self, input):
         mapping_color = np.vectorize(lambda x: self.color_map[x] if x!=0 else 0)
         output = mapping_color(input)
         return output

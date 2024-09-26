@@ -88,6 +88,14 @@ def validate_challenge_w_solutions_format(challenges, solutions):
     for task_id, task in challenges.items():
         assert len(task["test"]) == len(solutions[task_id])
 
+def test_puzzle_generator():
+    """
+    Puzzle_Generator = Color_Map()
+    training_challenges, training_solutions = Puzzle_Generator.sample(10)
+    #map outputs to dictionary
+    validate_challenge_w_solutions_format(training_challenges, training_solutions)
+    """
+    pass
 
 # Run the tests using the loaded data
 def test_submission_format_with_json_data():
