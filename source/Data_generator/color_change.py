@@ -8,8 +8,6 @@ from scripts.DataTransfer import *
 from scripts.DataVisualization import *
 from parent_puzzle import puzzle
 
-
-
 class color_change_puzzle(puzzle):
     def __init__(self, input_size=[8, 8], puzzle_id=0) -> None:
         super().__init__(input_size, puzzle_id)
@@ -30,6 +28,6 @@ class color_change_puzzle(puzzle):
 
 if __name__ == '__main__':
     c1_pz = color_change_puzzle(puzzle_id=23)
-    grid_examples = c1_pz.sample([[3,4], [5,6], [7,8]])
-    for i in range(3):
-        c1_pz.visualize(i)
+    grid_examples = c1_pz.sample(7,True)
+    print(grid_examples)
+    c1_pz.visualize()

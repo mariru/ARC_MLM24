@@ -18,21 +18,26 @@ class puzzle():
         self.rule = "Input a sparse matrix, change the pixel colors based on a colormap."
         self.examples = []
 
-    def construct_inputs(self, size):
+    def construct_inputs(self):
+        size = np.random.randint(3,10,[2])
         x = (np.random.rand(*size) < 0.1)* np.random.randint(1,10,size)
         return x
 
-    def sample(self, matrix_sizes):
-        for mat_size in matrix_sizes:
-            input = self.construct_inputs(mat_size)
+    def sample(self, sample_times, is_list = False):
+        train_data = []
+        for i in range(sample_times):
+            input = self.construct_inputs()
             output = self.construct_solutions(input)
-            self.examples.append((input, output))
-        return self.examples
+            train_data.append({ "input": input if not is_list else input.tolist(), 
+                                "output": output if not is_list else output.tolist()})
+            self.example=(input, output)
+        test_input = self.construct_inputs()
+        test_data = [{"input": test_input if not is_list else test_input.tolist()}]
+        data_pack = {"test": test_data, "train": train_data}
+        return data_pack
+
             
     def construct_solutions(self, input):
         return input
-    def visualize(self, idx):
-        try:
-            vis_two_grid(*self.examples[idx])
-        except:
-            print("out of range")
+    def visualize(self):
+        vis_two_grid(*self.example)
