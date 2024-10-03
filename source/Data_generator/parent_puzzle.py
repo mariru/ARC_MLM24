@@ -5,8 +5,8 @@ import os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 sys.path.append(project_root)
-from scripts.DataTransfer import *
-from scripts.DataVisualization import *
+from source.scripts.DataTransfer import *
+from source.scripts.DataVisualization import *
 
 
 class puzzle():

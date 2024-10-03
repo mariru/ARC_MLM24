@@ -7,11 +7,11 @@ sys.path.append(project_root_)
 
 # print("sys path of Solver.py: ",sys.path)
 
-from Solver.Parent_Solver import parent_solver
-from scripts.DataTransfer import *
-from scripts.DataVisualization import *
-from Data_generator.color_change import *
-from Data_generator.parent_puzzle import *
+from source.Solver.Parent_Solver import parent_solver
+from source.scripts.DataTransfer import *
+from source.scripts.DataVisualization import *
+from source.Data_generator.color_change import *
+from source.Data_generator.parent_puzzle import *
 
 
 class color_change_solver(parent_solver):

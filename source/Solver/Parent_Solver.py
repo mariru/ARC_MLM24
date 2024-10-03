@@ -1,12 +1,12 @@
 import numpy as np
 import sys
 import os
+from source.scripts.DataVisualization import *
+from source.scripts.DataTransfer import *
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 sys.path.append(project_root)
-from scripts.DataTransfer import *
-from scripts.DataVisualization import *
 
 
 class parent_solver():

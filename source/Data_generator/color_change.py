@@ -1,12 +1,12 @@
 import numpy as np
 import sys
 import os
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-sys.path.append(project_root)
-from scripts.DataTransfer import *
-from scripts.DataVisualization import *
+from source.scripts.DataTransfer import *
+from source.scripts.DataVisualization import *
 from parent_puzzle import puzzle
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
 
 class color_change_puzzle(puzzle):
     def __init__(self, input_size=[8, 8], puzzle_id=0) -> None:
