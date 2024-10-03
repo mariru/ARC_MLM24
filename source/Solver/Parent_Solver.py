@@ -11,6 +11,8 @@ from scripts.DataVisualization import *
 
 class parent_solver():
     def __init__(self, puzzle_data):
+        self.train_data = puzzle_data['train']
+        self.test_input = puzzle_data['test'][0]['input']
         self.rule = None
         self.test_solution = None
 
@@ -34,6 +36,6 @@ class parent_solver():
     def Get_Solution_in_numpy(self):
         return np.array(self.test_solution)
     
-    
+
     def test_visualize(self):
         vis_two_grid(self.test_input, self.test_solution)
