@@ -7,6 +7,14 @@ import numpy as np
 from arcle.loaders import MiniARCLoader
 from arcle.wrappers import BBoxWrapper
 
+from arcle.envs.o2arcenv import O2ARCv2Env
+operations = O2ARCv2Env().operations
+
+def get_action_name(action):
+    idx = int(action['operation'])
+    cnt = sum(sum(action['selection']))
+    return f"{cnt} pixels are manipulated with {operations[idx].__name__}"
+
 # TODO: Download Text Encoder Model from Huggingface
 
 class GymDataset(Dataset):
@@ -38,7 +46,7 @@ class GymDataset(Dataset):
 
     def encode_arcle_action(self, action):
         # TODO: Map the action to text
-
+        action_name = get_action_name(action)
         # TODO: Encode the text using the text encoder
         return torch.tensor(np.random.rand(128))
 
