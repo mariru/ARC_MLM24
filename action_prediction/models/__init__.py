@@ -1,0 +1,1 @@
+from .CNN_model import CNN_encoder

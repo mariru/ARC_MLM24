@@ -6,12 +6,13 @@ import argparse
 import yaml
 import torch.nn.functional as F
 
-dataset = GymDataset(num_samples=10000)
+dataset = GymDataset(num_samples=1000)
 dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
 #TODO: Define a model that predicts the action taken given the previous state and the current state
 
-from networks import CNN_encoder
+from models import CNN_encoder
+import wandb
 
 shapes = {
     "trials_remain": (1,), 
@@ -44,6 +45,7 @@ def main(args):
     # write me a baseline of training neural network
 
     for epoch in range(100):
+        round_loss = 0
         for i, data in enumerate(dataloader):
             obs_0, obs_1, action = data
             obs_0 = F.one_hot(obs_0['grid'].long(), num_classes=10).permute(0,3,1,2).float()
@@ -55,10 +57,11 @@ def main(args):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            print(loss.item())
 
+            round_loss += loss.item()
 
-
+        print(round_loss/len(dataloader))
+        wandb.log({"loss": round_loss/len(dataloader)})
 
 def yaml_loader(yaml_file):
     with open(yaml_file, "r") as f:
@@ -66,10 +69,14 @@ def yaml_loader(yaml_file):
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config", type=str, default="cnn_based_encoder.yaml")
+    args.add_argument("--config", type=str, default="configs/cnn_based_encoder.yaml")
     args = args.parse_args()
     if args.config:
         config = yaml_loader(args.config)
         for k, v in config.items():
             setattr(args, k, v)
+    
+    # Initialize wandb
+    wandb.init(project="action_prediction", config=args)
+    
     main(args)
