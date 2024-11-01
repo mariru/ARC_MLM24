@@ -373,7 +373,7 @@ class MultiEncoder(nn.Module):
     def forward(self, obs):
         outputs = []
         if self.cnn_shapes:
-            inputs = torch.cat([obs[k] for k in self.cnn_shapes], -1)
+            inputs = torch.cat([obs[k].unsqueeze(1).unsqueeze(-1) for k in self.cnn_shapes], -1)
             #inputs = inputs.permute(1,2,0)
             outputs.append(self._cnn(inputs))
         if self.mlp_shapes:
@@ -519,16 +519,14 @@ class ConvEncoder(nn.Module):
 
     def forward(self, obs):
         obs -= 0.5
+        
         # (batch, time, h, w, ch) -> (batch * time, h, w, ch)
-        print(obs.shape)
         x = obs.reshape((-1,) + tuple(obs.shape[-3:]))
         # (batch * time, h, w, ch) -> (batch * time, ch, h, w)
         # x = x.permute(0, 3, 1, 2)
 #        x_squeezed = x.squeeze(0)
 
-        x = self.layers(x)
-        # print(x.shape)
-        
+        x = self.layers(x)        
         # (batch * time, ...) -> (batch * time, -1)
         x = x.reshape([x.shape[0], np.prod(x.shape[1:])])
         

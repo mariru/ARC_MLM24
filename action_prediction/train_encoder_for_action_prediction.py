@@ -19,7 +19,7 @@ shapes = {
 }
 config = {
     "mlp_keys": r"features",
-    "cnn_keys": r"input|grid",
+    "cnn_keys": r"grid",
     "act": "ReLU",
     "norm": True,
     "cnn_depth": 128,
@@ -39,8 +39,6 @@ A_predictor = ActionPredictor(input_dim=config["cnn_depth"], output_dim=128, hid
 #TODO: Train the model using the dataloader
 criteria = nn.MSELoss()
 trainable_models = [Encoder, A_predictor]
-print(Encoder.parameters())
-print(A_predictor.parameters())
 # optimizer = torch.optim.Adam([model.parameters() for model in trainable_models], lr=0.001)
 optimizer = torch.optim.Adam(A_predictor.parameters(), lr=0.001)
 # write me a baseline of training neural network
@@ -48,15 +46,10 @@ optimizer = torch.optim.Adam(A_predictor.parameters(), lr=0.001)
 for epoch in range(10):
     for i, data in enumerate(dataloader):
         obs_0, obs_1, action = data
-        obs_0 = {k: torch.Tensor(v).float() for k, v in obs_0.items()}
-        print('-----------------------------------------------')
-        print(obs_0.keys())
-        print(obs_0['grid'][0])
-        print(obs_1['grid'][0])
-        break
-    break
-        # obs_1 = {k: torch.Tensor(v).float() for k, v in obs_1.items()}
-        # embedding_0 = Encoder(obs_0)
-        # embedding_1 = Encoder(obs_1)
+        obs_0 = {k: torch.Tensor(v).float() for k, v in obs_0.items()}  
+        obs_1 = {k: torch.Tensor(v).float() for k, v in obs_1.items()}
+        embedding_0 = Encoder(obs_0)
+        print(embedding_0.shape)
+        embedding_1 = Encoder(obs_1)
         # print('hello')
         # print(embedding_0.shape)

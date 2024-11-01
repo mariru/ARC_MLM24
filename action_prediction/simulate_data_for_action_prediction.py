@@ -46,11 +46,13 @@ class GymDataset(Dataset):
         for _ in range(self.num_samples):
             # Sample random action
             action = self.env.action_space.sample()
-            prev_obs = obs
+            
+            prev_obs = obs.copy()
             obs, _, term, trunc, _ = self.env.step(action)
 
             # save something in output.txt
             with open('output.txt','a') as f:
+                f.write("{}\n".format(obs['input']))
                 f.write("{}\n".format(prev_obs['grid']))
                 f.write("{}\n".format(obs['grid']))
                 f.write("-------------------------------\n")
