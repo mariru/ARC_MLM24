@@ -33,7 +33,7 @@ import os
 class GymDataset(Dataset):
     def __init__(self, num_samples, max_grid_size=(5, 5)):
         self.env = gym.make('ARCLE/RawARCEnv-v0',render_mode='ansi',data_loader = MiniARCLoader(),max_grid_size=max_grid_size)
-        #self.env = BBoxWrapper(self.env)
+        # self.env = BBoxWrapper(self.env)
         obs, info = self.env.reset()
         os.system('cls')
         self.num_samples = num_samples
@@ -52,7 +52,6 @@ class GymDataset(Dataset):
 
             # save something in output.txt
             with open('output.txt','a') as f:
-                f.write("{}\n".format(obs['input']))
                 f.write("{}\n".format(prev_obs['grid']))
                 f.write("{}\n".format(obs['grid']))
                 f.write("-------------------------------\n")
@@ -64,7 +63,7 @@ class GymDataset(Dataset):
             # Store the data: (prev_state, new_state, action)
             # TODO: uncomment the following line
             action = self.encode_arcle_action(action)
-            self.data.append((prev_obs, obs, action))
+            self.data.append((prev_obs, obs.copy(), action))
 
     def encode_arcle_action(self, action):
         # TODO: Map the action to text
@@ -89,4 +88,5 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
 
     dataset = GymDataset(num_samples=32)
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    # dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    # dataset[3]
